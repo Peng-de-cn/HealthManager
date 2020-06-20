@@ -2,7 +2,6 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
     app:startDestination="@+id/nav_home">
 
     <fragment
@@ -12,10 +11,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_medicament"
-        android:name="com.example.healthmanager.ui.main.medicament.MedicamentFragment"
-        android:label="@string/nav_medicament"
-        tools:layout="@layout/fragment_medicament" />
+        android:id="@+id/nav_medicine"
+        android:name="com.example.healthmanager.ui.main.medicine.MedicineFragment"
+        android:label="@string/nav_medicine"
+        tools:layout="@layout/fragment_medicine" />
 
     <fragment
         android:id="@+id/nav_more"

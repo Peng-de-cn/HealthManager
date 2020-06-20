@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="view"
+            type="com.example.healthmanager.ui.addmedicine.AddMedicineFragment" />
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/global_spacing_xxs"
+        android:hint="@string/medicine_hint"
+        android:lines="1"
+        android:drawableStart="@drawable/search"
+        app:layout_constraintTop_toTopOf="parent"  />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/global_spacing_xxs"
+        android:scrollbars="vertical"
+        android:id="@+id/recyclerview_medicine_name"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        tools:listitem="@layout/item_medicine_name" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

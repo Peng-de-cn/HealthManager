@@ -1,14 +1,15 @@
 package com.example.healthmanager.ui.main.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.example.healthmanager.L
 import com.example.healthmanager.R
 import com.example.healthmanager.databinding.FragmentHomeBinding
+import com.example.healthmanager.ui.addmedicine.AddMedicineActivity
 
 class HomeFragment : Fragment() {
 
@@ -26,9 +27,9 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding.floatingActionButton.setOnClickListener({
-            L.d("fabClicked")
-        })
+        binding.floatingActionButton.setOnClickListener {
+            startActivity(Intent(binding.root.context, AddMedicineActivity::class.java))
+        }
     }
 
 }
