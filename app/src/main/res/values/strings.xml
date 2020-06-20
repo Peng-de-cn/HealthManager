@@ -7,4 +7,11 @@
     <string name="label_search_medicine">Search Medicine</string>
     <string name="label_add_medicine">Add Medicine</string>
     <string name="medicine_hint">Medicine</string>
+    <string name="label_medicine">Medicine</string>
+    <string name="label_remind">Remind</string>
+    <string name="label_times">%s times/day</string>
+    <string name="label_take">Take %s pill</string>
+    <string name="label_plan">Plan</string>
+    <string name="label_begin_date">Begin Date %s</string>
+    <string name="label_details">Details</string>
 </resources>

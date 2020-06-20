@@ -1,5 +1,6 @@
 package com.example.healthmanager.ui.searchmedicine
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +18,7 @@ import com.example.healthmanager.data.database.MedicineDatabase
 import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.data.repository.MedicineRepository
 import com.example.healthmanager.databinding.FragmentSearchmedicineBinding
+import com.example.healthmanager.ui.addmedicine.AddMedicineActivity
 import kotlinx.android.synthetic.main.fragment_searchmedicine.*
 
 class SearchMedicineFragment : Fragment(), RecyclerViewClickListener {
@@ -68,6 +70,9 @@ class SearchMedicineFragment : Fragment(), RecyclerViewClickListener {
 
     override fun onRecyclerViewItemClick(view: View, medicine: Medicine) {
         L.d("click")
+        val intent = Intent(requireContext(), AddMedicineActivity::class.java)
+        intent.putExtra(AddMedicineActivity.EXTRA_MEDICINE, medicine)
+        startActivity(intent)
     }
 
 }

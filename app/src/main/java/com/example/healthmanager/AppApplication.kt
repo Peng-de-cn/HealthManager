@@ -15,6 +15,7 @@ class AppApplication: Application() {
         doAsync {
             medicineDB.medicineDao().deleteAll()
             if (medicineDB.medicineDao().count() == 0) {
+                L.d("Insert Data")
                 medicineDB.medicineDao().insert(
                     Medicine(
                         name = "阿司匹林",
@@ -24,7 +25,8 @@ class AppApplication: Application() {
                         takingTime1 = "07:00",
                         takingTime2 = "13:00",
                         takingTime3 = "19:00",
-                        date = ""
+                        date = "无日期",
+                        details = "还不知道"
                     )
                 )
                 medicineDB.medicineDao().insert(
@@ -36,7 +38,8 @@ class AppApplication: Application() {
                         takingTime1 = "06:00",
                         takingTime2 = "12:00",
                         takingTime3 = "18:00",
-                        date = ""
+                        date = "无日期",
+                        details = "还不知道"
                     )
                 )
             }

@@ -1,5 +1,7 @@
 package com.example.healthmanager.data.database.entity
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -28,8 +30,55 @@ data class Medicine(
     @ColumnInfo(name = "takingTime5")
     var takingTime5: String? = "",
     @ColumnInfo(name = "date")
-    var date: String? = ""
+    var date: String? = "",
+    @ColumnInfo(name = "details")
+    var details: String? = ""
 
-){
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readLong(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString()
+    ) {
+    }
+
     constructor() : this(0, "")
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(id)
+        parcel.writeString(name)
+        parcel.writeValue(numberOfTaking)
+        parcel.writeString(timeOfTaking)
+        parcel.writeValue(takingDose)
+        parcel.writeString(takingTime1)
+        parcel.writeString(takingTime2)
+        parcel.writeString(takingTime3)
+        parcel.writeString(takingTime4)
+        parcel.writeString(takingTime5)
+        parcel.writeString(date)
+        parcel.writeString(details)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Medicine> {
+        override fun createFromParcel(parcel: Parcel): Medicine {
+            return Medicine(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Medicine?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
