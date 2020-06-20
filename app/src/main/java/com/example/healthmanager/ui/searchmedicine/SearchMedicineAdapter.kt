@@ -1,4 +1,4 @@
-package com.example.healthmanager.ui.addmedicine
+package com.example.healthmanager.ui.searchmedicine
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.healthmanager.R
 import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.databinding.ItemMedicineNameBinding
-import com.example.healthmanager.ui.addmedicine.AddMedicineAdapter.ViewHolder
+import com.example.healthmanager.ui.searchmedicine.SearchMedicineAdapter.ViewHolder
 
-class AddMedicineAdapter(private val medicines: List<Medicine>, private val listener: RecyclerViewClickListener): RecyclerView.Adapter<ViewHolder>() {
+class SearchMedicineAdapter(private val medicines: List<Medicine>, private val listener: RecyclerViewClickListener): RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemMedicineNameBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_medicine_name, parent, false)

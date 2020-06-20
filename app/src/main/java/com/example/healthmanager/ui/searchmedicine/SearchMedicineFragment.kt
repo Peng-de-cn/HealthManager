@@ -1,4 +1,4 @@
-package com.example.healthmanager.ui.addmedicine
+package com.example.healthmanager.ui.searchmedicine
 
 import android.os.Bundle
 import android.text.Editable
@@ -16,21 +16,21 @@ import com.example.healthmanager.R
 import com.example.healthmanager.data.database.MedicineDatabase
 import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.data.repository.MedicineRepository
-import com.example.healthmanager.databinding.FragmentAddmedicineBinding
-import kotlinx.android.synthetic.main.fragment_addmedicine.*
+import com.example.healthmanager.databinding.FragmentSearchmedicineBinding
+import kotlinx.android.synthetic.main.fragment_searchmedicine.*
 
-class AddMedicineFragment : Fragment(), RecyclerViewClickListener {
+class SearchMedicineFragment : Fragment(), RecyclerViewClickListener {
 
-    private lateinit var binding: FragmentAddmedicineBinding
-    private lateinit var viewModel: AddMedicineViewModel
-    private lateinit var factory: AddMedicineViewModelFactory
+    private lateinit var binding: FragmentSearchmedicineBinding
+    private lateinit var viewModel: SearchMedicineViewModel
+    private lateinit var factory: SearchMedicineViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_addmedicine, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_searchmedicine, container, false)
         return binding.root
     }
 
@@ -39,14 +39,14 @@ class AddMedicineFragment : Fragment(), RecyclerViewClickListener {
 
         val repository = MedicineRepository(MedicineDatabase.instance(requireContext()))
 
-        factory = AddMedicineViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory).get(AddMedicineViewModel::class.java)
+        factory = SearchMedicineViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory).get(SearchMedicineViewModel::class.java)
 
         viewModel.medicinesLiveData.observe(viewLifecycleOwner, Observer { medicines ->
             recyclerview_medicine_name.also {
                 it.layoutManager = LinearLayoutManager(requireContext())
                 it.setHasFixedSize(true)
-                it.adapter = AddMedicineAdapter(medicines, this)
+                it.adapter = SearchMedicineAdapter(medicines, this)
             }
         })
 

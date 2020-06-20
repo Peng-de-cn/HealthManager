@@ -1,11 +1,11 @@
-package com.example.healthmanager.ui.addmedicine
+package com.example.healthmanager.ui.searchmedicine
 
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.healthmanager.R
 
-class AddMedicineActivity : AppCompatActivity(){
+class SearchMedicineActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -13,7 +13,7 @@ class AddMedicineActivity : AppCompatActivity(){
         actionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        setContentView(R.layout.activity_addmedicine)
+        setContentView(R.layout.activity_searchmedicine)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

@@ -1,4 +1,4 @@
-package com.example.healthmanager.ui.addmedicine
+package com.example.healthmanager.ui.searchmedicine
 
 import android.view.View
 import com.example.healthmanager.data.database.entity.Medicine

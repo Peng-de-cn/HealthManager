@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.healthmanager.R
 import com.example.healthmanager.databinding.FragmentHomeBinding
-import com.example.healthmanager.ui.addmedicine.AddMedicineActivity
+import com.example.healthmanager.ui.searchmedicine.SearchMedicineActivity
 
 class HomeFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         binding.floatingActionButton.setOnClickListener {
-            startActivity(Intent(binding.root.context, AddMedicineActivity::class.java))
+            startActivity(Intent(binding.root.context, SearchMedicineActivity::class.java))
         }
     }
 

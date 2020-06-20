@@ -1,4 +1,4 @@
-package com.example.healthmanager.ui.addmedicine
+package com.example.healthmanager.ui.searchmedicine
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.example.healthmanager.data.repository.MedicineRepository
 import com.example.healthmanager.util.Coroutines
 import kotlinx.coroutines.Job
 
-class AddMedicineViewModel(private val repository: MedicineRepository) : ViewModel() {
+class SearchMedicineViewModel(private val repository: MedicineRepository) : ViewModel() {
 
     private lateinit var job: Job
 

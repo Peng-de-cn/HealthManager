@@ -2,8 +2,9 @@
     <string name="app_name">HealthManager</string>
 
     <string name="nav_home">Home</string>
-    <string name="nav_medicine">medicine</string>
+    <string name="nav_medicine">Medicine</string>
     <string name="nav_more">More</string>
-    <string name="label_add_medicine">Add medicine</string>
-    <string name="medicine_hint">medicine</string>
+    <string name="label_search_medicine">Search Medicine</string>
+    <string name="label_add_medicine">Add Medicine</string>
+    <string name="medicine_hint">Medicine</string>
 </resources>

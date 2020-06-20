@@ -7,7 +7,7 @@
     <data>
         <variable
             name="view"
-            type="com.example.healthmanager.ui.addmedicine.AddMedicineFragment" />
+            type="com.example.healthmanager.ui.searchmedicine.SearchMedicineFragment" />
 
     </data>
 
