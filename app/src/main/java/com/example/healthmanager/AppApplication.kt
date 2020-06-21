@@ -13,7 +13,6 @@ class AppApplication: Application() {
         val medicineDB = MedicineDatabase.instance(applicationContext)
 
         doAsync {
-            medicineDB.medicineDao().deleteAll()
             if (medicineDB.medicineDao().count() == 0) {
                 L.d("Insert Data")
                 medicineDB.medicineDao().insert(

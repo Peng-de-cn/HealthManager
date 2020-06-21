@@ -21,13 +21,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.searchmedicine.SearchMedicineActivity"
-            android:label="@string/label_search_medicine"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.addmedicine.AddMedicineActivity"
             android:label="@string/label_add_medicine"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.main.customremind.CustomRemindActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ActivityDialogStyle" />
     </application>
 
 </manifest>

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.healthmanager.R
-import com.example.healthmanager.data.database.entity.Medicine
 
 class AddMedicineActivity: AppCompatActivity() {
 
@@ -19,17 +18,6 @@ class AddMedicineActivity: AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setContentView(R.layout.activity_addmedicine)
-
-        val bundle = Bundle()
-        bundle.putParcelable(EXTRA_MEDICINE, intent.getParcelableExtra<Medicine>(EXTRA_MEDICINE))
-        val fragment = AddMedicineFragment()
-        fragment.arguments = bundle
-
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commitNow()
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

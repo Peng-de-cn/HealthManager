@@ -1,30 +1,31 @@
 package com.example.healthmanager.ui.addmedicine
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.healthmanager.L
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.healthmanager.R
+import com.example.healthmanager.data.database.MedicineDatabase
 import com.example.healthmanager.data.database.entity.Medicine
+import com.example.healthmanager.data.repository.MedicineRepository
 import com.example.healthmanager.databinding.FragmentAddmedicineBinding
+import com.example.healthmanager.util.hideSoftKeyBoard
+import kotlinx.android.synthetic.main.fragment_addmedicine.*
 
-class AddMedicineFragment: Fragment() {
+class AddMedicineFragment: Fragment(),
+    RecyclerViewClickListener {
 
     private lateinit var medicine: Medicine
     private lateinit var binding: FragmentAddmedicineBinding
     private lateinit var viewModel: AddMedicineViewModel
     private lateinit var factory: AddMedicineViewModelFactory
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        medicine = requireArguments().getParcelable<Medicine>(AddMedicineActivity.EXTRA_MEDICINE) as Medicine
-        L.d("AddMedicineFragment: $medicine")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,9 +39,39 @@ class AddMedicineFragment: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        factory = AddMedicineViewModelFactory(medicine, binding.transitionsContainer, binding.imageArrow)
+        val repository = MedicineRepository(MedicineDatabase.instance(requireContext()))
+
+        factory = AddMedicineViewModelFactory(repository, binding.transitionsContainer, binding.imageArrow)
         viewModel = ViewModelProvider(this, factory).get(AddMedicineViewModel::class.java)
+        viewModel.medicinesLiveData.observe(viewLifecycleOwner, Observer { medicines ->
+            recyclerview_medicine_name.also {
+                it.layoutManager = LinearLayoutManager(requireContext())
+                it.setHasFixedSize(true)
+                it.adapter = AddMedicineAdapter(medicines, this)
+            }
+        })
         binding.viewmodel = viewModel
+
+        binding.search.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.searchMedicine(s.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+        })
+    }
+
+    override fun onRecyclerViewItemClick(view: View, medicine: Medicine) {
+        hideSoftKeyBoard(requireActivity(), binding.search)
+        this.medicine = medicine
         binding.model = medicine
+        viewModel.medicineSelected.set(true)
     }
 }

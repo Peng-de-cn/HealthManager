@@ -35,25 +35,59 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/global_spacing_xxs"
+                        android:src="@drawable/edit"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:onClick="@{viewmodel.onMedicineEditClicked}"
+                        app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}" />
+
                     <TextView
                         android:id="@+id/title_medicine"
+                        style="@style/CardTextTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
                         android:text="@string/label_medicine"
-                        style="@style/CardTextTitle"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/global_spacing_xxs"
+                        android:drawableStart="@drawable/search"
+                        android:hint="@string/medicine_hint"
+                        android:lines="1"
+                        app:layout_constraintTop_toBottomOf="@+id/title_medicine"
+                        app:transitionVisibility="@{viewmodel.medicineSelected ? View.GONE : View.VISIBLE}" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview_medicine_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/global_spacing_xxs"
+                        android:scrollbars="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/search"
+                        app:transitionVisibility="@{viewmodel.medicineSelected ? View.GONE : View.VISIBLE}"
+                        tools:listitem="@layout/item_medicine_name" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
                         android:text="@{model.name}"
+                        android:visibility="gone"
+                        style="@style/CardText"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/title_medicine"
-                        app:transitionVisibility="@{viewmodel.showDetails ? View.VISIBLE : View.GONE}" />
+                        app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,14 +97,17 @@
                 style="@style/Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/global_spacing_xxs" >
+                android:layout_margin="@dimen/global_spacing_xxs"
+                android:visibility="gone"
+                app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/title_remind"
+                        style="@style/CardTextTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
@@ -84,109 +121,173 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
                         android:text="@{@string/label_times(model.timeOfTaking)}"
+                        style="@style/CardText"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/title_remind" />
 
-                    <TextView
-                        android:id="@+id/title_takingtime1"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/layout_takingtime1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{model.takingTime1}"
-                        android:visibility="@{model.takingTime1.length() != 0 ? View.VISIBLE : View.GONE}"
+                        android:layout_margin="@dimen/global_spacing_xxxs"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_time_of_taking" />
+                        app:layout_constraintTop_toBottomOf="@+id/title_time_of_taking">
 
-                    <TextView
-                        android:id="@+id/title_takingdose1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{@string/label_take(model.takingDose)}"
-                        android:visibility="@{model.takingTime1.length() != 0 ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_time_of_taking" />
+                        <TextView
+                            android:id="@+id/title_takingtime1"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{model.takingTime1}"
+                            android:visibility="@{model.takingTime1.length() != 0 ? View.VISIBLE : View.GONE}" />
 
-                    <TextView
-                        android:id="@+id/title_takingtime2"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/title_takingdose1"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:visibility="@{model.takingTime1.length() != 0 ? View.VISIBLE : View.GONE}" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_takingtime2"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{model.takingTime2}"
-                        android:visibility="@{model.takingTime2.length() != 0 ? View.VISIBLE : View.GONE}"
+                        android:layout_margin="@dimen/global_spacing_xxxs"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_takingtime1" />
+                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime1">
 
-                    <TextView
-                        android:id="@+id/title_takingdose2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{@string/label_take(model.takingDose)}"
-                        android:visibility="@{model.takingTime2.length() != 0 ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_takingtime1" />
+                        <TextView
+                            android:id="@+id/title_takingtime2"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{model.takingTime2}"
+                            android:visibility="@{model.takingTime2.length() != 0 ? View.VISIBLE : View.GONE}" />
 
-                    <TextView
-                        android:id="@+id/title_takingtime3"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/title_takingdose2"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:visibility="@{model.takingTime2.length() != 0 ? View.VISIBLE : View.GONE}" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_takingtime3"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{model.takingTime3}"
-                        android:visibility="@{model.takingTime3.length() != 0 ? View.VISIBLE : View.GONE}"
+                        android:layout_margin="@dimen/global_spacing_xxxs"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_takingtime2" />
+                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime2">
 
-                    <TextView
-                        android:id="@+id/title_takingdose3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{@string/label_take(model.takingDose)}"
-                        android:visibility="@{model.takingTime3.length() != 0 ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_takingtime2" />
+                        <TextView
+                            android:id="@+id/title_takingtime3"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{model.takingTime3}"
+                            android:visibility="@{model.takingTime3.length() != 0 ? View.VISIBLE : View.GONE}" />
 
-                    <TextView
-                        android:id="@+id/title_takingtime4"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/title_takingdose3"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:visibility="@{model.takingTime3.length() != 0 ? View.VISIBLE : View.GONE}" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_takingtime4"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{model.takingTime4}"
-                        android:visibility="@{model.takingTime4.length() != 0 ? View.VISIBLE : View.GONE}"
+                        android:layout_margin="@dimen/global_spacing_xxxs"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_takingtime3" />
+                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime3">
 
-                    <TextView
-                        android:id="@+id/title_takingdose4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{@string/label_take(model.takingDose)}"
-                        android:visibility="@{model.takingTime4.length() != 0 ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_takingtime3" />
+                        <TextView
+                            android:id="@+id/title_takingtime4"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{model.takingTime4}"
+                            android:visibility="@{model.takingTime4.length() != 0 ? View.VISIBLE : View.GONE}" />
 
-                    <TextView
-                        android:id="@+id/title_takingtime5"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/title_takingdose4"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:visibility="@{model.takingTime4.length() != 0 ? View.VISIBLE : View.GONE}" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_takingtime5"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{model.takingTime5}"
-                        android:visibility="@{model.takingTime5.length() != 0 ? View.VISIBLE : View.GONE}"
+                        android:layout_margin="@dimen/global_spacing_xxxs"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_takingtime4" />
+                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime4">
 
-                    <TextView
-                        android:id="@+id/title_takingdose5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/global_spacing_xxs"
-                        android:text="@{@string/label_take(model.takingDose)}"
-                        android:visibility="@{model.takingTime5.length() != 0 ? View.VISIBLE : View.GONE}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_takingtime4" />
+                        <TextView
+                            android:id="@+id/title_takingtime5"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{model.takingTime5}"
+                            android:visibility="@{model.takingTime5.length() != 0 ? View.VISIBLE : View.GONE}" />
 
+                        <TextView
+                            android:id="@+id/title_takingdose5"
+                            style="@style/CardTextTaking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="@dimen/global_spacing_xxs"
+                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:visibility="@{model.takingTime5.length() != 0 ? View.VISIBLE : View.GONE}" />
+                    </RelativeLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -195,7 +296,9 @@
                 style="@style/Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/global_spacing_xxs">
+                android:layout_margin="@dimen/global_spacing_xxs"
+                android:visibility="gone"
+                app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -203,6 +306,7 @@
 
                     <TextView
                         android:id="@+id/title_plan"
+                        style="@style/CardTextTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
@@ -215,6 +319,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
                         android:text="@{@string/label_begin_date(model.date)}"
+                        style="@style/CardText"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/title_plan" />
@@ -227,7 +332,9 @@
                 style="@style/Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/global_spacing_xxs">
+                android:layout_margin="@dimen/global_spacing_xxs"
+                android:visibility="gone"
+                app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/transitions_container"
@@ -246,6 +353,7 @@
 
                     <TextView
                         android:id="@+id/title_details"
+                        style="@style/CardTextTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
@@ -258,6 +366,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
                         android:text="@{model.details}"
+                        style="@style/CardText"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/title_details"
@@ -266,6 +375,16 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/global_spacing_xxs"
+                android:layout_marginBottom="@dimen/global_spacing_xxs"
+                android:text="@string/button_done"
+                android:visibility="gone"
+                app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

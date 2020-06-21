@@ -9,10 +9,7 @@
         <item name="colorComplementary">@color/color_cd_complementary</item>
         <item name="android:colorForeground">@color/color_text_primary</item>
         <item name="android:colorBackground">@color/color_background</item>
-        <item name="android:textColorPrimary">@color/color_text_primary</item>
-        <item name="android:textColorSecondary">@color/color_text_secondary</item>
-        <item name="android:textColorHint">@color/color_text_primary</item>
-        <item name="android:textColorHintInverse">@color/color_text_primary</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
     <style name="Widget.MyTheme.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
@@ -25,9 +22,23 @@
         <item name="cardCornerRadius">8dp</item>
     </style>
 
-    <style name="CardTextTitle" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+    <style name="CardTextTitle" parent="Theme.MaterialComponents">
         <item name="android:textColor">@color/global_color_blue_primary</item>
         <item name="android:textSize">@dimen/global_text_size_headline</item>
     </style>
 
+    <style name="CardTextTaking" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/global_color_blue_primary_dark</item>
+        <item name="android:textSize">@dimen/global_text_size_title</item>
+    </style>
+
+    <style name="CardText" parent="MaterialAlertDialog.MaterialComponents.Title.Text">
+        <item name="android:textColor">@color/global_text_secondary</item>
+        <item name="android:textSize">@dimen/global_text_size_body_1</item>
+    </style>
+
+    <style name="Button" parent="android:Widget.Material.Button">
+        <item name="android:textColor">@color/color_button_text</item>
+        <item name="android:background">@drawable/bg_button</item>
+    </style>
 </resources>
