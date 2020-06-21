@@ -41,6 +41,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/global_spacing_xxs"
                         android:text="@string/label_medicine"
+                        style="@style/CardTextTitle"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 

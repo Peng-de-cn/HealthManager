@@ -31,6 +31,10 @@ data class Medicine(
     var takingTime5: String? = "",
     @ColumnInfo(name = "date")
     var date: String? = "",
+    @ColumnInfo(name = "inventory")
+    var inventory: Int? = 0,
+    @ColumnInfo(name = "inventoryLeft")
+    var inventoryLeft: Int? = 0,
     @ColumnInfo(name = "details")
     var details: String? = ""
 
@@ -47,11 +51,11 @@ data class Medicine(
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString()
     ) {
     }
-
-    constructor() : this(0, "")
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(id)
@@ -65,6 +69,8 @@ data class Medicine(
         parcel.writeString(takingTime4)
         parcel.writeString(takingTime5)
         parcel.writeString(date)
+        parcel.writeValue(inventory)
+        parcel.writeValue(inventoryLeft)
         parcel.writeString(details)
     }
 
@@ -81,4 +87,5 @@ data class Medicine(
             return arrayOfNulls(size)
         }
     }
+
 }
