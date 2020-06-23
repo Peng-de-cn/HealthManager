@@ -1,6 +1,9 @@
 package com.example.healthmanager.ui.addmedicine
 
+import android.app.AlarmManager
 import android.app.DatePickerDialog
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -15,16 +18,32 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
+import com.example.healthmanager.L
 import com.example.healthmanager.R
+import com.example.healthmanager.broadcast.AlarmReceiver
 import com.example.healthmanager.data.database.MedicineDatabase
 import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.data.repository.MedicineRepository
 import com.example.healthmanager.databinding.FragmentAddmedicineBinding
 import com.example.healthmanager.ui.customremind.CustomRemindActivity
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_ID
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_NAME
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CONTENT_TEXT
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CONTENT_TITLE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MEDICINE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGDOSE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGTIME
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_ID1
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_ID2
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_ID3
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_ID4
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_ID5
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_NAME1
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_NAME2
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_NAME3
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_NAME4
+import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_NAME5
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND1
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND2
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND3
@@ -184,6 +203,7 @@ class AddMedicineFragment: Fragment(),
     }
 
     private fun onDoneClicked() {
+        setRemind()
         val intent = Intent()
         intent.putExtra(EXTRA_MEDICINE, medicine)
         requireActivity().setResult(REQUEST_CODE_SETREMIND, intent)
@@ -200,5 +220,64 @@ class AddMedicineFragment: Fragment(),
             viewModel.updateMedicine(medicineDB, medicine, resultCode, data!!.getStringExtra(EXTRA_TAKINGTIME)!!, data.getIntExtra(EXTRA_TAKINGDOSE, -1))
             binding.model = medicine
         }
+    }
+
+    private fun setRemind() {
+        if (medicine.takingTime1!!.isNotEmpty()) {
+            val time = medicine.takingTime1!!.split(":".toRegex()).toTypedArray()
+            val hour = time[0].toInt()
+            val minute = time[1].toInt()
+            setAlarm(REQUEST_CODE_CUSTOMREMIND1, hour, minute, NOTIFICATION_CHANNEL_ID1, NOTIFICATION_CHANNEL_NAME1, medicine.name!!, getString(R.string.label_take, medicine.takingDose1!!.toString()))
+        }
+        if (medicine.takingTime2!!.isNotEmpty()) {
+            val time = medicine.takingTime2!!.split(":".toRegex()).toTypedArray()
+            val hour = time[0].toInt()
+            val minute = time[1].toInt()
+            setAlarm(REQUEST_CODE_CUSTOMREMIND2, hour, minute, NOTIFICATION_CHANNEL_ID2, NOTIFICATION_CHANNEL_NAME2, medicine.name!!, getString(R.string.label_take, medicine.takingDose2!!.toString()))
+        }
+        if (medicine.takingTime3!!.isNotEmpty()) {
+            val time = medicine.takingTime3!!.split(":".toRegex()).toTypedArray()
+            val hour = time[0].toInt()
+            val minute = time[1].toInt()
+            setAlarm(REQUEST_CODE_CUSTOMREMIND3, hour, minute, NOTIFICATION_CHANNEL_ID3, NOTIFICATION_CHANNEL_NAME3, medicine.name!!, getString(R.string.label_take, medicine.takingDose3!!.toString()))
+        }
+        if (medicine.takingTime4!!.isNotEmpty()) {
+            val time = medicine.takingTime4!!.split(":".toRegex()).toTypedArray()
+            val hour = time[0].toInt()
+            val minute = time[1].toInt()
+            setAlarm(REQUEST_CODE_CUSTOMREMIND4, hour, minute, NOTIFICATION_CHANNEL_ID4, NOTIFICATION_CHANNEL_NAME4, medicine.name!!, getString(R.string.label_take, medicine.takingDose4!!.toString()))
+        }
+        if (medicine.takingTime5!!.isNotEmpty()) {
+            val time = medicine.takingTime5!!.split(":".toRegex()).toTypedArray()
+            val hour = time[0].toInt()
+            val minute = time[1].toInt()
+            setAlarm(REQUEST_CODE_CUSTOMREMIND5, hour, minute, NOTIFICATION_CHANNEL_ID5, NOTIFICATION_CHANNEL_NAME5, medicine.name!!, getString(R.string.label_take, medicine.takingDose5!!.toString()))
+        }
+    }
+
+    private fun setAlarm(requestCode: Int, hour: Int, minute: Int, channelId: String, channelName: String, contentTitle: String, contentText: String){
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+//        val selectTime = calendar.timeInMillis
+//
+//        // 如果当前时间大于设置的时间，那么就从第二天的设定时间开始
+//        if(systemTime > selectTime) {
+//            calendar.add(Calendar.DAY_OF_MONTH, 1)
+//        }
+
+        val intent = Intent(requireActivity(), AlarmReceiver::class.java)
+        intent.putExtra(EXTRA_CHANNEL_ID, channelId)
+        intent.putExtra(EXTRA_CHANNEL_NAME, channelName)
+        intent.putExtra(EXTRA_CONTENT_TITLE, contentTitle)
+        intent.putExtra(EXTRA_CONTENT_TEXT, contentText)
+        val pi = PendingIntent.getBroadcast(requireActivity(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val am = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pi)
+        L.d("set: $requestCode")
     }
 }

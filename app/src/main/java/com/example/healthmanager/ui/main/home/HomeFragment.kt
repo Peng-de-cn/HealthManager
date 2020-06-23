@@ -15,6 +15,7 @@ import com.example.healthmanager.R
 import com.example.healthmanager.broadcast.AlarmReceiver
 import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.databinding.FragmentHomeBinding
+import com.example.healthmanager.ui.addmedicine.AddMedicineActivity
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_ID
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_NAME
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MEDICINE
@@ -47,11 +48,8 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         binding.floatingActionButton.setOnClickListener {
-//            val intent = Intent(binding.root.context, AddMedicineActivity::class.java)
-//            startActivityForResult(intent, REQUEST_CODE_SETREMIND)
-
-            startRemind1()
-            startRemind2()
+            val intent = Intent(binding.root.context, AddMedicineActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_SETREMIND)
         }
     }
 

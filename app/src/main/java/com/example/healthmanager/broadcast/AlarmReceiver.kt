@@ -15,6 +15,7 @@ import androidx.core.app.TaskStackBuilder
 import com.example.healthmanager.L
 import com.example.healthmanager.R
 import com.example.healthmanager.ui.main.MainActivity
+import com.example.healthmanager.util.AppConstants
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_ID
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_NAME
 
@@ -24,6 +25,8 @@ class AlarmReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
         val id = intent!!.extras!!.getString(EXTRA_CHANNEL_ID)
         val name = intent.extras!!.getString(EXTRA_CHANNEL_NAME)
+        val contentTitle = intent.extras!!.getString(AppConstants.EXTRA_CONTENT_TITLE)
+        val contentText = intent.extras!!.getString(AppConstants.EXTRA_CONTENT_TEXT)
 
         L.d("Alarm id: $id, name: $name")
 
@@ -43,10 +46,10 @@ class AlarmReceiver: BroadcastReceiver() {
         val builder = NotificationCompat.Builder(context, id)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher))
-            .setContentTitle("My notification")
-            .setContentText("Much longer text that cannot fit one line...")
+            .setContentTitle(contentTitle)
+            .setContentText(contentText)
             .setStyle(NotificationCompat.BigTextStyle()
-                .bigText("test..."))
+                .bigText(contentText))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setSound(soundUri)

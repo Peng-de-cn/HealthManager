@@ -10,6 +10,8 @@ class AppConstants {
         const val EXTRA_MEDICINE = "extra_medicine"
         const val EXTRA_CHANNEL_ID = "extra_channel_id"
         const val EXTRA_CHANNEL_NAME = "extra_channel_name"
+        const val EXTRA_CONTENT_TITLE = "extra_content_title"
+        const val EXTRA_CONTENT_TEXT = "extra_content_text"
 
         const val REQUEST_CODE_CUSTOMREMIND1 = 1001
         const val REQUEST_CODE_CUSTOMREMIND2 = 1002
