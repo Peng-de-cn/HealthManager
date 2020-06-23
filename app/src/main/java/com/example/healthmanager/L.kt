@@ -4,7 +4,7 @@ import android.util.Log
 
 object L {
 
-    private var TAG = "test"
+    private var TAG = "zp"
     private val MIN_STACK_OFFSET = 3
 
     fun init(tag: String = TAG):L {
