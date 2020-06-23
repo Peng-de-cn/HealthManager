@@ -20,10 +20,12 @@ class AppApplication: Application() {
                         name = "阿司匹林",
                         numberOfTaking = 3,
                         timeOfTaking = "3",
-                        takingDose = 1,
                         takingTime1 = "07:00",
                         takingTime2 = "13:00",
                         takingTime3 = "19:00",
+                        takingDose1 = 1,
+                        takingDose2 = 1,
+                        takingDose3 = 1,
                         date = "无日期",
                         details = "还不知道"
                     )
@@ -33,10 +35,12 @@ class AppApplication: Application() {
                         name = "阿司不匹林",
                         numberOfTaking = 3,
                         timeOfTaking = "3",
-                        takingDose = 1,
                         takingTime1 = "06:00",
                         takingTime2 = "12:00",
                         takingTime3 = "18:00",
+                        takingDose1 = 1,
+                        takingDose2 = 1,
+                        takingDose3 = 1,
                         date = "无日期",
                         details = "还不知道"
                     )

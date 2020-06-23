@@ -14,5 +14,9 @@
     <string name="label_plan">Plan</string>
     <string name="label_begin_date">Begin Date %s</string>
     <string name="label_details">Details</string>
+    <string name="label_picktime">When do you need to take this dose?</string>
+    <string name="label_pickdose">How many do you take?</string>
+
     <string name="button_done">Done</string>
+    <string name="button_set">Set</string>
 </resources>

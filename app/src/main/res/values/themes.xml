@@ -6,7 +6,7 @@
         <item name="android:actionBarStyle">@style/Widget.MyTheme.Toolbar</item>
     </style>
 
-    <style name="Theme.ActivityDialogStyle" parent="Theme.AppCompat.Light">
+    <style name="Theme.ActivityDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowNoTitle">true</item>　
         <item name="android:windowBackground">@color/global_bg_back</item>

@@ -1,9 +1,6 @@
 package com.example.healthmanager.data.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.healthmanager.data.database.entity.Medicine
 
 @Dao
@@ -32,4 +29,7 @@ interface MedicineDao {
 
     @Query("select count(*) from Medicine")
     fun count(): Int
+
+    @Update
+    fun updateMedicine(medicine: Medicine)
 }

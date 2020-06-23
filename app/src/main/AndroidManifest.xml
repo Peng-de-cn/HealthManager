@@ -24,7 +24,8 @@
             android:name=".ui.addmedicine.AddMedicineActivity"
             android:label="@string/label_add_medicine"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.main.customremind.CustomRemindActivity"
+        <activity
+            android:name=".ui.customremind.CustomRemindActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ActivityDialogStyle" />
     </application>

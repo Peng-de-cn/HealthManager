@@ -17,8 +17,16 @@ data class Medicine(
     var numberOfTaking: Int? = 0,
     @ColumnInfo(name = "timeOfTaking")
     var timeOfTaking: String? = "",
-    @ColumnInfo(name = "takingDose")
-    var takingDose: Int? = 0,
+    @ColumnInfo(name = "takingDose1")
+    var takingDose1: Int? = 0,
+    @ColumnInfo(name = "takingDose2")
+    var takingDose2: Int? = 0,
+    @ColumnInfo(name = "takingDose3")
+    var takingDose3: Int? = 0,
+    @ColumnInfo(name = "takingDose4")
+    var takingDose4: Int? = 0,
+    @ColumnInfo(name = "takingDose5")
+    var takingDose5: Int? = 0,
     @ColumnInfo(name = "takingTime1")
     var takingTime1: String? = "",
     @ColumnInfo(name = "takingTime2")
@@ -45,6 +53,10 @@ data class Medicine(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
@@ -62,7 +74,11 @@ data class Medicine(
         parcel.writeString(name)
         parcel.writeValue(numberOfTaking)
         parcel.writeString(timeOfTaking)
-        parcel.writeValue(takingDose)
+        parcel.writeValue(takingDose1)
+        parcel.writeValue(takingDose2)
+        parcel.writeValue(takingDose3)
+        parcel.writeValue(takingDose4)
+        parcel.writeValue(takingDose5)
         parcel.writeString(takingTime1)
         parcel.writeString(takingTime2)
         parcel.writeString(takingTime3)
@@ -87,5 +103,4 @@ data class Medicine(
             return arrayOfNulls(size)
         }
     }
-
 }

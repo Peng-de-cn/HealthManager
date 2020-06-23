@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="view"
+            type="com.example.healthmanager.ui.addmedicine.AddMedicineFragment" />
 
         <variable
             name="viewmodel"
@@ -43,8 +46,8 @@
                         android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:onClick="@{viewmodel.onMedicineEditClicked}"
-                        app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}" />
+                        app:onClick="@{view.onMedicineEditClicked}"
+                        app:transitionVisibility="@{view.medicineSelected ? View.VISIBLE : View.GONE}" />
 
                     <TextView
                         android:id="@+id/title_medicine"
@@ -65,7 +68,7 @@
                         android:hint="@string/medicine_hint"
                         android:lines="1"
                         app:layout_constraintTop_toBottomOf="@+id/title_medicine"
-                        app:transitionVisibility="@{viewmodel.medicineSelected ? View.GONE : View.VISIBLE}" />
+                        app:transitionVisibility="@{view.medicineSelected ? View.GONE : View.VISIBLE}" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview_medicine_name"
@@ -74,7 +77,7 @@
                         android:layout_margin="@dimen/global_spacing_xxs"
                         android:scrollbars="vertical"
                         app:layout_constraintTop_toBottomOf="@+id/search"
-                        app:transitionVisibility="@{viewmodel.medicineSelected ? View.GONE : View.VISIBLE}"
+                        app:transitionVisibility="@{view.medicineSelected ? View.GONE : View.VISIBLE}"
                         tools:listitem="@layout/item_medicine_name" />
 
                     <TextView
@@ -87,7 +90,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/title_medicine"
-                        app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}" />
+                        app:transitionVisibility="@{view.medicineSelected ? View.VISIBLE : View.GONE}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -99,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/global_spacing_xxs"
                 android:visibility="gone"
-                app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}">
+                app:transitionVisibility="@{view.medicineSelected ? View.VISIBLE : View.GONE}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -134,7 +137,8 @@
                         android:focusable="true"
                         android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/title_time_of_taking">
+                        app:layout_constraintTop_toBottomOf="@+id/title_time_of_taking"
+                        app:onClick="@{view.onTakingTime1LayoutClicked}">
 
                         <TextView
                             android:id="@+id/title_takingtime1"
@@ -153,7 +157,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_margin="@dimen/global_spacing_xxs"
-                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:text="@{@string/label_take(model.takingDose1)}"
                             android:visibility="@{model.takingTime1.length() != 0 ? View.VISIBLE : View.GONE}" />
 
                     </RelativeLayout>
@@ -167,7 +171,8 @@
                         android:focusable="true"
                         android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime1">
+                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime1"
+                        app:onClick="@{view.onTakingTime2LayoutClicked}">
 
                         <TextView
                             android:id="@+id/title_takingtime2"
@@ -186,7 +191,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_margin="@dimen/global_spacing_xxs"
-                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:text="@{@string/label_take(model.takingDose2)}"
                             android:visibility="@{model.takingTime2.length() != 0 ? View.VISIBLE : View.GONE}" />
 
                     </RelativeLayout>
@@ -200,7 +205,8 @@
                         android:focusable="true"
                         android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime2">
+                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime2"
+                        app:onClick="@{view.onTakingTime3LayoutClicked}">
 
                         <TextView
                             android:id="@+id/title_takingtime3"
@@ -219,7 +225,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_margin="@dimen/global_spacing_xxs"
-                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:text="@{@string/label_take(model.takingDose3)}"
                             android:visibility="@{model.takingTime3.length() != 0 ? View.VISIBLE : View.GONE}" />
 
                     </RelativeLayout>
@@ -233,7 +239,8 @@
                         android:focusable="true"
                         android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime3">
+                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime3"
+                        app:onClick="@{view.onTakingTime4LayoutClicked}">
 
                         <TextView
                             android:id="@+id/title_takingtime4"
@@ -252,7 +259,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_margin="@dimen/global_spacing_xxs"
-                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:text="@{@string/label_take(model.takingDose4)}"
                             android:visibility="@{model.takingTime4.length() != 0 ? View.VISIBLE : View.GONE}" />
 
                     </RelativeLayout>
@@ -266,7 +273,8 @@
                         android:focusable="true"
                         android:background="?attr/selectableItemBackground"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime4">
+                        app:layout_constraintTop_toBottomOf="@+id/layout_takingtime4"
+                        app:onClick="@{view.onTakingTime5LayoutClicked}">
 
                         <TextView
                             android:id="@+id/title_takingtime5"
@@ -285,7 +293,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_margin="@dimen/global_spacing_xxs"
-                            android:text="@{@string/label_take(model.takingDose)}"
+                            android:text="@{@string/label_take(model.takingDose5)}"
                             android:visibility="@{model.takingTime5.length() != 0 ? View.VISIBLE : View.GONE}" />
                     </RelativeLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -298,7 +306,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/global_spacing_xxs"
                 android:visibility="gone"
-                app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}">
+                app:transitionVisibility="@{view.medicineSelected ? View.VISIBLE : View.GONE}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -334,7 +342,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/global_spacing_xxs"
                 android:visibility="gone"
-                app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}">
+                app:transitionVisibility="@{view.medicineSelected ? View.VISIBLE : View.GONE}">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/transitions_container"
@@ -349,7 +357,7 @@
                         android:src="@drawable/expand_less"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:onClick="@{viewmodel.onArrowClicked}" />
+                        app:onClick="@{view.onArrowClicked}" />
 
                     <TextView
                         android:id="@+id/title_details"
@@ -370,7 +378,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/title_details"
-                        app:transitionVisibility="@{viewmodel.showDetails ? View.VISIBLE : View.GONE}" />
+                        app:transitionVisibility="@{view.showDetails ? View.VISIBLE : View.GONE}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -384,7 +392,7 @@
                 android:layout_marginBottom="@dimen/global_spacing_xxs"
                 android:text="@string/button_done"
                 android:visibility="gone"
-                app:transitionVisibility="@{viewmodel.medicineSelected ? View.VISIBLE : View.GONE}"/>
+                app:transitionVisibility="@{view.medicineSelected ? View.VISIBLE : View.GONE}"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

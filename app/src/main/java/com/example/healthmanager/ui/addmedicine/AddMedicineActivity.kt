@@ -1,15 +1,13 @@
 package com.example.healthmanager.ui.addmedicine
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.healthmanager.R
 
-class AddMedicineActivity: AppCompatActivity() {
 
-    companion object {
-        const val EXTRA_MEDICINE = "extra_medicine"
-    }
+class AddMedicineActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,5 +25,12 @@ class AddMedicineActivity: AppCompatActivity() {
         }
 
         return false
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }
