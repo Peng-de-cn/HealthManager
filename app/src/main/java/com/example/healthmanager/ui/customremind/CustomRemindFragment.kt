@@ -84,7 +84,7 @@ class CustomRemindFragment: Fragment() {
         val time = String.format("%02d:%02d", binding.timePicker.hour, binding.timePicker.minute)
         val intent = Intent()
         intent.putExtra(EXTRA_TAKINGTIME, time)
-        intent.putExtra(EXTRA_TAKINGDOSE, takingDose)
+        intent.putExtra(EXTRA_TAKINGDOSE, viewModel.takingDoseString.get().toString().toInt())
         when(requestCode) {
             REQUEST_CODE_CUSTOMREMIND1 -> {
                 requireActivity().setResult(REQUEST_CODE_CUSTOMREMIND1, intent)

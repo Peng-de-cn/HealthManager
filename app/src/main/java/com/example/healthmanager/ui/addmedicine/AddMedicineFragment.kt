@@ -1,5 +1,6 @@
 package com.example.healthmanager.ui.addmedicine
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -20,6 +21,7 @@ import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.data.repository.MedicineRepository
 import com.example.healthmanager.databinding.FragmentAddmedicineBinding
 import com.example.healthmanager.ui.customremind.CustomRemindActivity
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MEDICINE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGDOSE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGTIME
@@ -28,9 +30,13 @@ import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOM
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND3
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND4
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND5
+import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_SETREMIND
 import com.example.healthmanager.util.RotateArrow
 import com.example.healthmanager.util.hideSoftKeyBoard
 import kotlinx.android.synthetic.main.fragment_addmedicine.*
+import java.text.Format
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AddMedicineFragment: Fragment(),
     RecyclerViewClickListener {
@@ -49,6 +55,8 @@ class AddMedicineFragment: Fragment(),
     val onTakingTime3LayoutClicked = { onTakingTime3LayoutClicked() }
     val onTakingTime4LayoutClicked = { onTakingTime4LayoutClicked() }
     val onTakingTime5LayoutClicked = { onTakingTime5LayoutClicked() }
+    val onDateLayoutClicked = { onDateLayoutClicked() }
+    val onDoneClicked = { onDoneClicked() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,8 +102,11 @@ class AddMedicineFragment: Fragment(),
 
     override fun onRecyclerViewItemClick(view: View, medicine: Medicine) {
         hideSoftKeyBoard(requireActivity(), binding.search)
+        val data = Date()
+        val sdf: Format = SimpleDateFormat("MM-dd")
+        medicine.date = sdf.format(data)
         this.medicine = medicine
-        binding.model = medicine
+        binding.model = this.medicine
         medicineSelected.set(true)
     }
 
@@ -154,6 +165,29 @@ class AddMedicineFragment: Fragment(),
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime5)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose5)
         startActivityForResult(intent, REQUEST_CODE_CUSTOMREMIND5)
+    }
+
+    private fun onDateLayoutClicked() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(requireActivity(), DatePickerDialog.OnDateSetListener {
+                _, _, month, dayOfMonth ->
+            val date = String.format("%02d-%02d", month+1, dayOfMonth)
+            medicine.date = date
+            binding.model = medicine
+        }, year, month, day)
+        dpd.datePicker.minDate = c.time.time
+        dpd.show()
+    }
+
+    private fun onDoneClicked() {
+        val intent = Intent()
+        intent.putExtra(EXTRA_MEDICINE, medicine)
+        requireActivity().setResult(REQUEST_CODE_SETREMIND, intent)
+        requireActivity().finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

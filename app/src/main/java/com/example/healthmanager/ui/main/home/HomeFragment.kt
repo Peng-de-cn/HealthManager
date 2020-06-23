@@ -7,9 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.example.healthmanager.L
 import com.example.healthmanager.R
+import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.databinding.FragmentHomeBinding
 import com.example.healthmanager.ui.addmedicine.AddMedicineActivity
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MEDICINE
+import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_SETREMIND
 
 class HomeFragment : Fragment() {
 
@@ -28,8 +32,18 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         binding.floatingActionButton.setOnClickListener {
-            startActivity(Intent(binding.root.context, AddMedicineActivity::class.java))
+            val intent = Intent(binding.root.context, AddMedicineActivity::class.java)
+            startActivityForResult(intent, REQUEST_CODE_SETREMIND)
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == REQUEST_CODE_SETREMIND) {
+            val medicine = data!!.getParcelableExtra<Medicine>(EXTRA_MEDICINE)
+            L.d("done: $medicine")
+        }
+}
 
 }
