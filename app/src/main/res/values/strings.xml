@@ -17,6 +17,9 @@
     <string name="label_picktime">When do you need to take this dose?</string>
     <string name="label_pickdose">How many do you take?</string>
 
+    <string name="toast_maxiTake">You need to take up to %s pill</string>
+    <string name="toast_minTake">You need to take at least %s pill</string>
+
     <string name="button_done">Done</string>
     <string name="button_set">Set</string>
 </resources>

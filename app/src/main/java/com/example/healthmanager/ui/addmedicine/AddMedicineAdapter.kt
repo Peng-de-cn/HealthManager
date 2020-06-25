@@ -8,7 +8,7 @@ import com.example.healthmanager.R
 import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.databinding.ItemMedicineNameBinding
 
-class AddMedicineAdapter(private val medicines: List<Medicine>, private val listener: RecyclerViewClickListener): RecyclerView.Adapter<AddMedicineAdapter.ViewHolder>() {
+class AddMedicineAdapter(private val medicines: List<Medicine>, private val listener: AddMedicineRecyclerViewClickListener): RecyclerView.Adapter<AddMedicineAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding: ItemMedicineNameBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_medicine_name, parent, false)

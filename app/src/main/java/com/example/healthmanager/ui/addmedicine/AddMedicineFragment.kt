@@ -30,7 +30,9 @@ import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_ID
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_NAME
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CONTENT_TEXT
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CONTENT_TITLE
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MAXINUMBEROFTAKING
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MEDICINE
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MINNUMBEROFTAKING
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGDOSE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGTIME
@@ -58,7 +60,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AddMedicineFragment: Fragment(),
-    RecyclerViewClickListener {
+    AddMedicineRecyclerViewClickListener {
 
     private lateinit var medicine: Medicine
     private lateinit var binding: FragmentAddmedicineBinding
@@ -151,6 +153,8 @@ class AddMedicineFragment: Fragment(),
         intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND1)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime1)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose1)
+        intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
+        intent.putExtra(EXTRA_MINNUMBEROFTAKING, medicine.minNumberOfTaking)
         startActivityForResult(intent, REQUEST_CODE_CUSTOMREMIND1)
     }
 
@@ -159,6 +163,8 @@ class AddMedicineFragment: Fragment(),
         intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND2)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime2)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose2)
+        intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
+        intent.putExtra(EXTRA_MINNUMBEROFTAKING, medicine.minNumberOfTaking)
         startActivityForResult(intent, REQUEST_CODE_CUSTOMREMIND2)
     }
 
@@ -167,6 +173,8 @@ class AddMedicineFragment: Fragment(),
         intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND3)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime3)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose3)
+        intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
+        intent.putExtra(EXTRA_MINNUMBEROFTAKING, medicine.minNumberOfTaking)
         startActivityForResult(intent, REQUEST_CODE_CUSTOMREMIND3)
     }
 
@@ -175,6 +183,8 @@ class AddMedicineFragment: Fragment(),
         intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND4)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime4)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose4)
+        intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
+        intent.putExtra(EXTRA_MINNUMBEROFTAKING, medicine.minNumberOfTaking)
         startActivityForResult(intent, REQUEST_CODE_CUSTOMREMIND4)
     }
 
@@ -183,6 +193,8 @@ class AddMedicineFragment: Fragment(),
         intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND5)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime5)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose5)
+        intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
+        intent.putExtra(EXTRA_MINNUMBEROFTAKING, medicine.minNumberOfTaking)
         startActivityForResult(intent, REQUEST_CODE_CUSTOMREMIND5)
     }
 
@@ -263,12 +275,12 @@ class AddMedicineFragment: Fragment(),
         calendar.set(Calendar.MINUTE, minute)
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
-//        val selectTime = calendar.timeInMillis
-//
-//        // 如果当前时间大于设置的时间，那么就从第二天的设定时间开始
-//        if(systemTime > selectTime) {
-//            calendar.add(Calendar.DAY_OF_MONTH, 1)
-//        }
+        val selectTime = calendar.timeInMillis
+
+        // 如果当前时间大于设置的时间，那么就从第二天的设定时间开始
+        if(System.currentTimeMillis() > selectTime) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
 
         val intent = Intent(requireActivity(), AlarmReceiver::class.java)
         intent.putExtra(EXTRA_CHANNEL_ID, channelId)
@@ -278,6 +290,6 @@ class AddMedicineFragment: Fragment(),
         val pi = PendingIntent.getBroadcast(requireActivity(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val am = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pi)
-        L.d("set: $requestCode")
+        L.d("set: $calendar")
     }
 }

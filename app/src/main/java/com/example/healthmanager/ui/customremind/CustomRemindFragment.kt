@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.healthmanager.R
 import com.example.healthmanager.databinding.FragmentCustomremindBinding
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MAXINUMBEROFTAKING
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MINNUMBEROFTAKING
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGDOSE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGTIME
@@ -25,6 +28,8 @@ class CustomRemindFragment: Fragment() {
     private var requestCode: Int = -1
     private lateinit var takingTime: String
     private var takingDose: Int = -1
+    private var maxiNumberOfTaking = 1
+    private var minNumberOfTaking = 1
     private lateinit var binding: FragmentCustomremindBinding
     private lateinit var viewModel: CustomRemindViewModel
     private lateinit var factory: CustomRemindViewModelFactory
@@ -39,6 +44,8 @@ class CustomRemindFragment: Fragment() {
         requestCode = requireArguments().getInt(EXTRA_REQUEST_CODE)
         takingTime = requireArguments().getString(EXTRA_TAKINGTIME)!!
         takingDose = requireArguments().getInt(EXTRA_TAKINGDOSE)
+        maxiNumberOfTaking = requireArguments().getInt(EXTRA_MAXINUMBEROFTAKING)
+        minNumberOfTaking = requireArguments().getInt(EXTRA_MINNUMBEROFTAKING)
     }
 
     override fun onCreateView(
@@ -67,15 +74,19 @@ class CustomRemindFragment: Fragment() {
     }
 
     private fun onPlusClicked() {
-        takingDose += 1
+        if (takingDose < maxiNumberOfTaking) {
+            takingDose += 1
+        } else {
+            Toast.makeText(requireActivity(),getString(R.string.toast_maxiTake, maxiNumberOfTaking.toString()),Toast.LENGTH_SHORT).show()
+        }
         viewModel.setTakingDose(takingDose)
     }
 
     private fun onMinusClicked() {
-        if (takingDose > 2) {
+        if (takingDose > minNumberOfTaking) {
             takingDose -= 1
         } else {
-            takingDose = 1
+            Toast.makeText(requireActivity(),getString(R.string.toast_minTake, minNumberOfTaking.toString()),Toast.LENGTH_SHORT).show()
         }
         viewModel.setTakingDose(takingDose)
     }

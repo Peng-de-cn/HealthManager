@@ -13,8 +13,10 @@ data class Medicine(
     var id: Long = 0,
     @ColumnInfo(name = "name")
     var name: String? = "",
-    @ColumnInfo(name = "numberOfTaking")
-    var numberOfTaking: Int? = 0,
+    @ColumnInfo(name = "maxiNumberOfTaking")
+    var maxiNumberOfTaking: Int? = 0,
+    @ColumnInfo(name = "minNumberOfTaking")
+    var minNumberOfTaking: Int? = 0,
     @ColumnInfo(name = "timeOfTaking")
     var timeOfTaking: String? = "",
     @ColumnInfo(name = "takingDose1")
@@ -51,6 +53,7 @@ data class Medicine(
         parcel.readLong(),
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
+        parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
@@ -72,7 +75,8 @@ data class Medicine(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeLong(id)
         parcel.writeString(name)
-        parcel.writeValue(numberOfTaking)
+        parcel.writeValue(maxiNumberOfTaking)
+        parcel.writeValue(minNumberOfTaking)
         parcel.writeString(timeOfTaking)
         parcel.writeValue(takingDose1)
         parcel.writeValue(takingDose2)

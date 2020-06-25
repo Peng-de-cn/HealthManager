@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="global_spacing_xxxxs">2dp</dimen>
     <dimen name="global_spacing_xxxs">4dp</dimen>
     <dimen name="global_spacing_xxs">8dp</dimen>
     <dimen name="global_spacing_xs">16dp</dimen>

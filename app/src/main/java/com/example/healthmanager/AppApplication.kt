@@ -18,7 +18,8 @@ class AppApplication: Application() {
                 medicineDB.medicineDao().insert(
                     Medicine(
                         name = "阿司匹林",
-                        numberOfTaking = 3,
+                        maxiNumberOfTaking = 3,
+                        minNumberOfTaking = 1,
                         timeOfTaking = "3",
                         takingTime1 = "07:00",
                         takingTime2 = "13:00",
@@ -26,14 +27,15 @@ class AppApplication: Application() {
                         takingDose1 = 1,
                         takingDose2 = 1,
                         takingDose3 = 1,
-                        date = "无日期",
+                        date = "",
                         details = "还不知道"
                     )
                 )
                 medicineDB.medicineDao().insert(
                     Medicine(
-                        name = "阿司不匹林",
-                        numberOfTaking = 3,
+                        name = "拜糖平/阿卡波糖片",
+                        maxiNumberOfTaking = 4,
+                        minNumberOfTaking = 1,
                         timeOfTaking = "3",
                         takingTime1 = "06:00",
                         takingTime2 = "12:00",
@@ -41,8 +43,8 @@ class AppApplication: Application() {
                         takingDose1 = 1,
                         takingDose2 = 1,
                         takingDose3 = 1,
-                        date = "无日期",
-                        details = "还不知道"
+                        date = "",
+                        details = "治疗糖尿病，每片50mg，一日三次，一次一片至四片，用餐前整片吞服或与前几口食物咀嚼使用"
                     )
                 )
             }

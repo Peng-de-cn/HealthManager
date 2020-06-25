@@ -42,6 +42,7 @@
     <color name="global_text_hint_inverse">#80ffffff</color>
     <color name="global_text_highlight">#669e9e9e</color>
     <color name="global_text_link">#1976d2</color>
+    <color name="global_text_error">#f44336</color>
 
     <color name="global_bg_back">#eeeeee</color>
     <color name="global_bg_back_inverse">#303030</color>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="medicine"
+            type="com.example.healthmanager.ui.main.home.item.ItemMedicine"></variable>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_medicine"
+        style="@style/Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/global_spacing_xs"
+        android:layout_marginEnd="@dimen/global_spacing_xs"
+        android:layout_marginTop="@dimen/global_spacing_xxs"
+        android:layout_marginBottom="@dimen/global_spacing_xxs">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/transitions_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/layout_takingtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_cd_success"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/title_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/global_spacing_xxs"
+                    android:text="@{medicine.takingTime}"
+                    android:textSize="@dimen/global_text_size_headline"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_takingtime" >
+
+                <ImageView
+                    android:id="@+id/image_medicine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/global_spacing_xxs"
+                    android:src="@drawable/medicine"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/title_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/global_spacing_xxs"
+                    android:text="@{medicine.name}"
+                    android:layout_toEndOf="@+id/image_medicine"/>
+
+                <TextView
+                    android:id="@+id/title_takingdose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/global_spacing_xxs"
+                    android:layout_marginEnd="@dimen/global_spacing_xxs"
+                    android:layout_marginBottom="@dimen/global_spacing_xxs"
+                    android:text="@{@string/label_times(medicine.takingDose)}"
+                    android:layout_toEndOf="@+id/image_medicine"
+                    android:layout_below="@+id/title_name"/>
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
