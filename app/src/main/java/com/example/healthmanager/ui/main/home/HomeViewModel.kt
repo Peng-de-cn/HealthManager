@@ -12,7 +12,8 @@ class HomeViewModel(private val medicineDB: MyMedicineDatabase) : ViewModel() {
 
     private lateinit var job: Job
 
-    private val medicines = ArrayList<ItemMedicine>()
+    private val medicines: MutableList<ItemMedicine> = mutableListOf()
+    private var sortedMedicines = listOf<ItemMedicine>()
     val medicinesLiveData = MutableLiveData<List<ItemMedicine>>()
 
     fun loadItemMedicine() {
@@ -73,6 +74,8 @@ class HomeViewModel(private val medicineDB: MyMedicineDatabase) : ViewModel() {
                         medicines.add(item)
                     }
 
+                    sortedMedicines = medicines.sorted()
+
                     doAsync {
                         if (myMedicine.takingTime1!!.isEmpty() && myMedicine.takingTime2!!.isEmpty()
                             && myMedicine.takingTime3!!.isEmpty() && myMedicine.takingTime4!!.isEmpty()
@@ -80,8 +83,9 @@ class HomeViewModel(private val medicineDB: MyMedicineDatabase) : ViewModel() {
                             medicineDB.myMedicineDao().delete(myMedicine)
                         }
                     }
+
                 }
-                medicinesLiveData.value = medicines
+                medicinesLiveData.value = sortedMedicines
             })
     }
 

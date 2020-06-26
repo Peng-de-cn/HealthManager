@@ -60,16 +60,15 @@ class InventoryFragment: Fragment() {
     }
 
     private fun onPlusClicked() {
-        if (inventoryOrigin != -1) {
-            inventory += 1
+        inventory += if (inventoryOrigin != -1) {
             if (inventory < inventoryOrigin) {
-                inventory += 1
+                1
             } else {
                 Toast.makeText(requireActivity(),getString(R.string.toast_inventoryerror),Toast.LENGTH_SHORT).show()
                 return
             }
         } else {
-            inventory += 1
+            1
         }
 
         viewModel.setInventory(inventory)

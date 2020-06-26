@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
+import com.example.healthmanager.L
 import com.example.healthmanager.R
 import com.example.healthmanager.broadcast.AlarmReceiver
 import com.example.healthmanager.data.database.MedicineDatabase
@@ -395,5 +396,8 @@ class AddMedicineFragment : Fragment(),
         )
         val am = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pi)
+
+        val dateTime = SimpleDateFormat("dd-MMM hh:mm aa").format(calendar.time)
+        L.d("set alarm: $dateTime")
     }
 }
