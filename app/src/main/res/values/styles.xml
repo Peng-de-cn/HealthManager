@@ -7,7 +7,7 @@
         <item name="colorAccentDark">@color/color_cd_accent_dark</item>
         <item name="colorSuccess">@color/color_cd_success</item>
         <item name="colorComplementary">@color/color_cd_complementary</item>
-        <item name="android:colorForeground">@color/color_text_primary</item>
+        <item name="android:colorForeground">@color/global_color_primary_dark</item>
         <item name="android:colorBackground">@color/color_background</item>
         <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
