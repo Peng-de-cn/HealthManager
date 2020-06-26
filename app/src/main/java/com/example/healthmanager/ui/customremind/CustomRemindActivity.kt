@@ -17,7 +17,7 @@ class CustomRemindActivity: AppCompatActivity() {
         setContentView(R.layout.activity_customremind)
 
         val bundle = Bundle()
-        bundle.putInt(AppConstants.EXTRA_REQUEST_CODE, intent.getIntExtra(AppConstants.EXTRA_REQUEST_CODE, -1))
+        bundle.putInt(AppConstants.EXTRA_REQUEST_CODE_ADDMEDICINE, intent.getIntExtra(AppConstants.EXTRA_REQUEST_CODE_ADDMEDICINE, -1))
         bundle.putString(EXTRA_TAKINGTIME, intent.getStringExtra(EXTRA_TAKINGTIME))
         bundle.putInt(EXTRA_TAKINGDOSE, intent.getIntExtra(EXTRA_TAKINGDOSE, -1))
         bundle.putInt(EXTRA_MAXINUMBEROFTAKING, intent.getIntExtra(EXTRA_MAXINUMBEROFTAKING, -1))

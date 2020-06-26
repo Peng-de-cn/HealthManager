@@ -2,7 +2,6 @@ package com.example.healthmanager.ui.addmedicine
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.healthmanager.L
 import com.example.healthmanager.data.database.MedicineDatabase
 import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.data.repository.MedicineRepository
@@ -24,7 +23,6 @@ class AddMedicineViewModel(
     val medicinesLiveData = MutableLiveData<List<Medicine>>()
 
     fun searchMedicine(name: String) {
-        L.d("search: $name")
         job = Coroutines.ioThenMain(
             { repository.medicines(name.trim()) },
             { medicinesLiveData.value = it }

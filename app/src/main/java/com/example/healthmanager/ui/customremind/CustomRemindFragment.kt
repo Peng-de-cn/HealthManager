@@ -13,7 +13,7 @@ import com.example.healthmanager.R
 import com.example.healthmanager.databinding.FragmentCustomremindBinding
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MAXINUMBEROFTAKING
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MINNUMBEROFTAKING
-import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE_ADDMEDICINE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGDOSE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGTIME
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND1
@@ -41,7 +41,7 @@ class CustomRemindFragment: Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestCode = requireArguments().getInt(EXTRA_REQUEST_CODE)
+        requestCode = requireArguments().getInt(EXTRA_REQUEST_CODE_ADDMEDICINE)
         takingTime = requireArguments().getString(EXTRA_TAKINGTIME)!!
         takingDose = requireArguments().getInt(EXTRA_TAKINGDOSE)
         maxiNumberOfTaking = requireArguments().getInt(EXTRA_MAXINUMBEROFTAKING)

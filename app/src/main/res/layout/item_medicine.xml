@@ -6,7 +6,7 @@
 
         <variable
             name="medicine"
-            type="com.example.healthmanager.ui.main.home.item.ItemMedicine"></variable>
+            type="com.example.healthmanager.ui.main.home.item.ItemMedicine" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,7 +28,7 @@
                 android:id="@+id/layout_takingtime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_cd_success"
+                android:background="@color/global_color_blue_primary_dark"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -36,9 +36,10 @@
                     android:id="@+id/title_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/global_spacing_xxs"
+                    android:layout_margin="@dimen/global_spacing_xxxs"
                     android:text="@{medicine.takingTime}"
-                    android:textSize="@dimen/global_text_size_headline"
+                    android:textSize="@dimen/global_text_size_headline2"
+                    android:textColor="@color/global_text_primary_inverse"
                     android:layout_centerInParent="true"/>
             </RelativeLayout>
 

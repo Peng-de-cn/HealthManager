@@ -18,7 +18,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.TransitionManager
-import com.example.healthmanager.L
 import com.example.healthmanager.R
 import com.example.healthmanager.broadcast.AlarmReceiver
 import com.example.healthmanager.data.database.MedicineDatabase
@@ -33,7 +32,7 @@ import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CONTENT_TITLE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MAXINUMBEROFTAKING
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MEDICINE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MINNUMBEROFTAKING
-import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE_ADDMEDICINE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGDOSE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGTIME
 import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_ID1
@@ -150,7 +149,7 @@ class AddMedicineFragment: Fragment(),
 
     private fun onTakingTime1LayoutClicked() {
         val intent = Intent(requireContext(), CustomRemindActivity::class.java)
-        intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND1)
+        intent.putExtra(EXTRA_REQUEST_CODE_ADDMEDICINE, REQUEST_CODE_CUSTOMREMIND1)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime1)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose1)
         intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
@@ -160,7 +159,7 @@ class AddMedicineFragment: Fragment(),
 
     private fun onTakingTime2LayoutClicked() {
         val intent = Intent(requireContext(), CustomRemindActivity::class.java)
-        intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND2)
+        intent.putExtra(EXTRA_REQUEST_CODE_ADDMEDICINE, REQUEST_CODE_CUSTOMREMIND2)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime2)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose2)
         intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
@@ -170,7 +169,7 @@ class AddMedicineFragment: Fragment(),
 
     private fun onTakingTime3LayoutClicked() {
         val intent = Intent(requireContext(), CustomRemindActivity::class.java)
-        intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND3)
+        intent.putExtra(EXTRA_REQUEST_CODE_ADDMEDICINE, REQUEST_CODE_CUSTOMREMIND3)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime3)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose3)
         intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
@@ -180,7 +179,7 @@ class AddMedicineFragment: Fragment(),
 
     private fun onTakingTime4LayoutClicked() {
         val intent = Intent(requireContext(), CustomRemindActivity::class.java)
-        intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND4)
+        intent.putExtra(EXTRA_REQUEST_CODE_ADDMEDICINE, REQUEST_CODE_CUSTOMREMIND4)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime4)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose4)
         intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
@@ -190,7 +189,7 @@ class AddMedicineFragment: Fragment(),
 
     private fun onTakingTime5LayoutClicked() {
         val intent = Intent(requireContext(), CustomRemindActivity::class.java)
-        intent.putExtra(EXTRA_REQUEST_CODE, REQUEST_CODE_CUSTOMREMIND5)
+        intent.putExtra(EXTRA_REQUEST_CODE_ADDMEDICINE, REQUEST_CODE_CUSTOMREMIND5)
         intent.putExtra(EXTRA_TAKINGTIME, medicine.takingTime5)
         intent.putExtra(EXTRA_TAKINGDOSE, medicine.takingDose5)
         intent.putExtra(EXTRA_MAXINUMBEROFTAKING, medicine.maxiNumberOfTaking)
@@ -290,6 +289,5 @@ class AddMedicineFragment: Fragment(),
         val pi = PendingIntent.getBroadcast(requireActivity(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val am = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pi)
-        L.d("set: $calendar")
     }
 }

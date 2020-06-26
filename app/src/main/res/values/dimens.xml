@@ -18,6 +18,7 @@
     <dimen name="global_text_size_display_2">45sp</dimen>
     <dimen name="global_text_size_display_1">34sp</dimen>
     <dimen name="global_text_size_headline">24sp</dimen>
+    <dimen name="global_text_size_headline2">22sp</dimen>
     <dimen name="global_text_size_title">20sp</dimen>
     <dimen name="global_text_size_subhead">18sp</dimen>
     <dimen name="global_text_size_body_2">14sp</dimen>

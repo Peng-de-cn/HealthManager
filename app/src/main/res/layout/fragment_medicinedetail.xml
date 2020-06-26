@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="view"
+            type="com.example.healthmanager.ui.medicinedetail.MedicineDetailFragment" />
+
+        <variable
+            name="itemmedicine"
+            type="com.example.healthmanager.ui.main.home.item.ItemMedicine" />
+
+        <variable
+            name="medicine"
+            type="com.example.healthmanager.data.database.entity.Medicine" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_medicine"
+            style="@style/Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/transitions_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/global_spacing_xs">
+
+                <RelativeLayout
+                    android:id="@+id/layout_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_cd_light"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/image_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="@dimen/global_spacing_xs"
+                        android:layout_marginEnd="@dimen/global_spacing_xs"
+                        android:layout_marginTop="@dimen/global_spacing_xxs"
+                        android:layout_marginBottom="@dimen/global_spacing_xxs"
+                        android:maxWidth="@dimen/global_spacing_s"
+                        android:maxHeight="@dimen/global_spacing_s"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/edit"
+                        android:tint="@color/color_background"
+                        app:onClick="@{view.onEditClicked}" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/global_spacing_xxs"
+                        android:layout_marginBottom="@dimen/global_spacing_xxs"
+                        android:maxWidth="@dimen/global_spacing_s"
+                        android:maxHeight="@dimen/global_spacing_s"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitCenter"
+                        android:layout_toStartOf="@+id/image_edit"
+                        android:src="@drawable/delete"
+                        android:tint="@color/color_background"
+                        app:onClick="@{view.onDeleteClicked}" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/global_spacing_xs"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_header" >
+
+                    <TextView
+                        android:id="@+id/title_name"
+                        style="@style/CardTextTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@{itemmedicine.name}" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/global_spacing_xs"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_name"
+                    app:layout_constraintStart_toStartOf="parent" >
+
+                    <ImageView
+                        android:id="@+id/image_clock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/global_spacing_xs"
+                        android:src="@drawable/clock" />
+
+                    <TextView
+                        android:id="@+id/title_time"
+                        style="@style/CardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/image_clock"
+                        android:layout_centerVertical="true"
+                        android:text="@{itemmedicine.takingTime}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_medicine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/global_spacing_xs"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_time"
+                    app:layout_constraintStart_toStartOf="parent" >
+
+                    <ImageView
+                        android:id="@+id/image_medicine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/global_spacing_xs"
+                        android:src="@drawable/medicine" />
+
+                    <TextView
+                        android:id="@+id/title_takingdose"
+                        style="@style/CardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/image_medicine"
+                        android:layout_centerVertical="true"
+                        android:text="@{@string/label_times(itemmedicine.takingDose)}" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/global_spacing_xs"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_medicine"
+                    app:layout_constraintStart_toStartOf="parent" >
+
+                    <ImageView
+                        android:id="@+id/image_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/global_spacing_xs"
+                        android:src="@drawable/detail" />
+
+                    <TextView
+                        android:id="@+id/title_detail"
+                        style="@style/CardText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/image_detail"
+                        android:layout_centerVertical="true"
+                        android:text="@{medicine.details}" />
+
+                </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</layout>

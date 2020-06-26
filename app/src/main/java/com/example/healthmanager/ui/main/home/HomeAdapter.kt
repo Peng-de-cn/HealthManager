@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.healthmanager.L
 import com.example.healthmanager.R
 import com.example.healthmanager.databinding.ItemMedicineBinding
 import com.example.healthmanager.ui.main.home.item.ItemMedicine
@@ -20,12 +19,10 @@ class HomeAdapter(private val medicines: List<ItemMedicine>, private val listene
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.medicine = medicines[position]
-        L.d("bind: ${medicines[position]}")
         holder.binding.cardMedicine.setOnClickListener {
             listener.onRecyclerViewItemClick(holder.binding.cardMedicine, medicines[position])
         }
     }
-
 
     inner class ViewHolder(val binding: ItemMedicineBinding) : RecyclerView.ViewHolder(binding.root)
 }
