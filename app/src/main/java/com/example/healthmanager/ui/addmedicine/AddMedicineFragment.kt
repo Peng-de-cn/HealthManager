@@ -25,14 +25,18 @@ import com.example.healthmanager.data.database.entity.Medicine
 import com.example.healthmanager.data.repository.MedicineRepository
 import com.example.healthmanager.databinding.FragmentAddmedicineBinding
 import com.example.healthmanager.ui.customremind.CustomRemindActivity
+import com.example.healthmanager.ui.inventory.InventoryActivity
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_ID
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CHANNEL_NAME
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CONTENT_TEXT
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_CONTENT_TITLE
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_INVENTORY
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_INVENTORY_ORIGIN
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MAXINUMBEROFTAKING
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MEDICINE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_MINNUMBEROFTAKING
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE_ADDMEDICINE
+import com.example.healthmanager.util.AppConstants.Companion.EXTRA_REQUEST_CODE_INVENTORY
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGDOSE
 import com.example.healthmanager.util.AppConstants.Companion.EXTRA_TAKINGTIME
 import com.example.healthmanager.util.AppConstants.Companion.NOTIFICATION_CHANNEL_ID1
@@ -50,6 +54,8 @@ import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOM
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND3
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND4
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND5
+import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_INVENTORY
+import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_INVENTORYLEFT
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_SETREMIND
 import com.example.healthmanager.util.RotateArrow
 import com.example.healthmanager.util.hideSoftKeyBoard
@@ -58,7 +64,7 @@ import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddMedicineFragment: Fragment(),
+class AddMedicineFragment : Fragment(),
     AddMedicineRecyclerViewClickListener {
 
     private lateinit var medicine: Medicine
@@ -75,6 +81,8 @@ class AddMedicineFragment: Fragment(),
     val onTakingTime3LayoutClicked = { onTakingTime3LayoutClicked() }
     val onTakingTime4LayoutClicked = { onTakingTime4LayoutClicked() }
     val onTakingTime5LayoutClicked = { onTakingTime5LayoutClicked() }
+    val onInventoryClicked = { onInventoryClicked() }
+    val onInventoryLeftClicked = { onInventoryLeftClicked() }
     val onDateLayoutClicked = { onDateLayoutClicked() }
     val onDoneClicked = { onDoneClicked() }
 
@@ -104,7 +112,7 @@ class AddMedicineFragment: Fragment(),
         })
         binding.viewmodel = viewModel
 
-        binding.search.addTextChangedListener(object: TextWatcher {
+        binding.search.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 viewModel.searchMedicine(s.toString())
             }
@@ -203,14 +211,34 @@ class AddMedicineFragment: Fragment(),
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        val dpd = DatePickerDialog(requireActivity(), DatePickerDialog.OnDateSetListener {
-                _, _, month, dayOfMonth ->
-            val date = String.format("%02d-%02d", month+1, dayOfMonth)
-            medicine.date = date
-            binding.model = medicine
-        }, year, month, day)
+        val dpd = DatePickerDialog(
+            requireActivity(),
+            DatePickerDialog.OnDateSetListener { _, _, month, dayOfMonth ->
+                val date = String.format("%02d-%02d", month + 1, dayOfMonth)
+                medicine.date = date
+                binding.model = medicine
+            },
+            year,
+            month,
+            day
+        )
         dpd.datePicker.minDate = c.time.time
         dpd.show()
+    }
+
+    private fun onInventoryClicked() {
+        val intent = Intent(requireContext(), InventoryActivity::class.java)
+        intent.putExtra(EXTRA_REQUEST_CODE_INVENTORY, REQUEST_CODE_INVENTORY)
+        intent.putExtra(EXTRA_INVENTORY, medicine.inventory)
+        startActivityForResult(intent, REQUEST_CODE_INVENTORY)
+    }
+
+    private fun onInventoryLeftClicked() {
+        val intent = Intent(requireContext(), InventoryActivity::class.java)
+        intent.putExtra(EXTRA_REQUEST_CODE_INVENTORY, REQUEST_CODE_INVENTORYLEFT)
+        intent.putExtra(EXTRA_INVENTORY, medicine.inventoryLeft)
+        intent.putExtra(EXTRA_INVENTORY_ORIGIN, medicine.inventory)
+        startActivityForResult(intent, REQUEST_CODE_INVENTORYLEFT)
     }
 
     private fun onDoneClicked() {
@@ -227,8 +255,33 @@ class AddMedicineFragment: Fragment(),
         val medicineDB = MedicineDatabase.instance(requireActivity())
         if (resultCode == REQUEST_CODE_CUSTOMREMIND1 || resultCode == REQUEST_CODE_CUSTOMREMIND2
             || resultCode == REQUEST_CODE_CUSTOMREMIND3 || resultCode == REQUEST_CODE_CUSTOMREMIND4
-            || resultCode == REQUEST_CODE_CUSTOMREMIND5) {
-            viewModel.updateMedicine(medicineDB, medicine, resultCode, data!!.getStringExtra(EXTRA_TAKINGTIME)!!, data.getIntExtra(EXTRA_TAKINGDOSE, -1))
+            || resultCode == REQUEST_CODE_CUSTOMREMIND5
+        ) {
+            viewModel.updateMedicine(
+                medicineDB,
+                medicine,
+                resultCode,
+                data!!.getStringExtra(EXTRA_TAKINGTIME)!!,
+                data.getIntExtra(EXTRA_TAKINGDOSE, -1)
+            )
+            binding.model = medicine
+        } else if (resultCode == REQUEST_CODE_INVENTORY) {
+            viewModel.updateMedicine(
+                medicineDB,
+                medicine,
+                resultCode,
+                data!!.getIntExtra(EXTRA_INVENTORY, -1),
+                -1
+            )
+            binding.model = medicine
+        } else if (resultCode == REQUEST_CODE_INVENTORYLEFT) {
+            viewModel.updateMedicine(
+                medicineDB,
+                medicine,
+                resultCode,
+                -1,
+                data!!.getIntExtra(EXTRA_INVENTORY, -1)
+            )
             binding.model = medicine
         }
     }
@@ -238,35 +291,83 @@ class AddMedicineFragment: Fragment(),
             val time = medicine.takingTime1!!.split(":".toRegex()).toTypedArray()
             val hour = time[0].toInt()
             val minute = time[1].toInt()
-            setAlarm(REQUEST_CODE_CUSTOMREMIND1, hour, minute, NOTIFICATION_CHANNEL_ID1, NOTIFICATION_CHANNEL_NAME1, medicine.name!!, getString(R.string.label_take, medicine.takingDose1!!.toString()))
+            setAlarm(
+                REQUEST_CODE_CUSTOMREMIND1,
+                hour,
+                minute,
+                NOTIFICATION_CHANNEL_ID1,
+                NOTIFICATION_CHANNEL_NAME1,
+                medicine.name!!,
+                getString(R.string.label_take, medicine.takingDose1!!.toString())
+            )
         }
         if (medicine.takingTime2!!.isNotEmpty()) {
             val time = medicine.takingTime2!!.split(":".toRegex()).toTypedArray()
             val hour = time[0].toInt()
             val minute = time[1].toInt()
-            setAlarm(REQUEST_CODE_CUSTOMREMIND2, hour, minute, NOTIFICATION_CHANNEL_ID2, NOTIFICATION_CHANNEL_NAME2, medicine.name!!, getString(R.string.label_take, medicine.takingDose2!!.toString()))
+            setAlarm(
+                REQUEST_CODE_CUSTOMREMIND2,
+                hour,
+                minute,
+                NOTIFICATION_CHANNEL_ID2,
+                NOTIFICATION_CHANNEL_NAME2,
+                medicine.name!!,
+                getString(R.string.label_take, medicine.takingDose2!!.toString())
+            )
         }
         if (medicine.takingTime3!!.isNotEmpty()) {
             val time = medicine.takingTime3!!.split(":".toRegex()).toTypedArray()
             val hour = time[0].toInt()
             val minute = time[1].toInt()
-            setAlarm(REQUEST_CODE_CUSTOMREMIND3, hour, minute, NOTIFICATION_CHANNEL_ID3, NOTIFICATION_CHANNEL_NAME3, medicine.name!!, getString(R.string.label_take, medicine.takingDose3!!.toString()))
+            setAlarm(
+                REQUEST_CODE_CUSTOMREMIND3,
+                hour,
+                minute,
+                NOTIFICATION_CHANNEL_ID3,
+                NOTIFICATION_CHANNEL_NAME3,
+                medicine.name!!,
+                getString(R.string.label_take, medicine.takingDose3!!.toString())
+            )
         }
         if (medicine.takingTime4!!.isNotEmpty()) {
             val time = medicine.takingTime4!!.split(":".toRegex()).toTypedArray()
             val hour = time[0].toInt()
             val minute = time[1].toInt()
-            setAlarm(REQUEST_CODE_CUSTOMREMIND4, hour, minute, NOTIFICATION_CHANNEL_ID4, NOTIFICATION_CHANNEL_NAME4, medicine.name!!, getString(R.string.label_take, medicine.takingDose4!!.toString()))
+            setAlarm(
+                REQUEST_CODE_CUSTOMREMIND4,
+                hour,
+                minute,
+                NOTIFICATION_CHANNEL_ID4,
+                NOTIFICATION_CHANNEL_NAME4,
+                medicine.name!!,
+                getString(R.string.label_take, medicine.takingDose4!!.toString())
+            )
         }
         if (medicine.takingTime5!!.isNotEmpty()) {
             val time = medicine.takingTime5!!.split(":".toRegex()).toTypedArray()
             val hour = time[0].toInt()
             val minute = time[1].toInt()
-            setAlarm(REQUEST_CODE_CUSTOMREMIND5, hour, minute, NOTIFICATION_CHANNEL_ID5, NOTIFICATION_CHANNEL_NAME5, medicine.name!!, getString(R.string.label_take, medicine.takingDose5!!.toString()))
+            setAlarm(
+                REQUEST_CODE_CUSTOMREMIND5,
+                hour,
+                minute,
+                NOTIFICATION_CHANNEL_ID5,
+                NOTIFICATION_CHANNEL_NAME5,
+                medicine.name!!,
+                getString(R.string.label_take, medicine.takingDose5!!.toString())
+            )
         }
     }
 
-    private fun setAlarm(requestCode: Int, hour: Int, minute: Int, channelId: String, channelName: String, contentTitle: String, contentText: String){
+    private fun setAlarm(
+        requestCode: Int,
+        hour: Int,
+        minute: Int,
+        channelId: String,
+        channelName: String,
+        contentTitle: String,
+        contentText: String
+    ) {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
 
@@ -277,7 +378,7 @@ class AddMedicineFragment: Fragment(),
         val selectTime = calendar.timeInMillis
 
         // 如果当前时间大于设置的时间，那么就从第二天的设定时间开始
-        if(System.currentTimeMillis() > selectTime) {
+        if (System.currentTimeMillis() > selectTime) {
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 
@@ -286,7 +387,12 @@ class AddMedicineFragment: Fragment(),
         intent.putExtra(EXTRA_CHANNEL_NAME, channelName)
         intent.putExtra(EXTRA_CONTENT_TITLE, contentTitle)
         intent.putExtra(EXTRA_CONTENT_TEXT, contentText)
-        val pi = PendingIntent.getBroadcast(requireActivity(), requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pi = PendingIntent.getBroadcast(
+            requireActivity(),
+            requestCode,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val am = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         am.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pi)
     }

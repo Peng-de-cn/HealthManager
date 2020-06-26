@@ -29,9 +29,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ActivityDialogStyle" />
         <activity
-            android:name=".ui.medicinedetail.MedicineDetailActivity"
+            android:name=".ui.inventory.InventoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.ActivityDialogStyle" />
+        <activity
+        android:name=".ui.medicinedetail.MedicineDetailActivity"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.ActivityDialogStyle" />
 
         <receiver
             android:name=".broadcast.AlarmReceiver"

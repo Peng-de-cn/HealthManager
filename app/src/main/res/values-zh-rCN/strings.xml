@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">健康小助手</string>
+
+    <string name="nav_home">主页</string>
+    <string name="nav_medicine">药物</string>
+    <string name="nav_more">更多</string>
+    <string name="label_search_medicine">搜索药物</string>
+    <string name="label_add_medicine">添加药物</string>
+    <string name="medicine_hint">药物</string>
+    <string name="label_medicine">药物名称</string>
+    <string name="label_remind">提醒</string>
+    <string name="label_times">每天%s次</string>
+    <string name="label_take">吃%s片</string>
+    <string name="label_plan">安排</string>
+    <string name="label_begin_date">开始日期：</string>
+    <string name="label_details">说明</string>
+    <string name="label_picktime">您什么时候需要服用这个药？</string>
+    <string name="label_pickdose">您需要服用多少？</string>
+    <string name="label_inventory">库存</string>
+    <string name="text_inventory">剩余 %s 片</string>
+    <string name="label_inventory_notify">提醒我在</string>
+    <string name="text_inventorynotify">剩余 %s 片的时候</string>
+    <string name="title_inventory">设置现有药片数量</string>
+    <string name="title_inventory_left">提醒我在</string>
+
+    <string name="toast_maxiTake">您最多可服用 %s 片</string>
+    <string name="toast_minTake">您最少服用 %s 片</string>
+    <string name="toast_inventoryerror">数量大于库存，无法设置</string>
+
+    <string name="button_done">完成</string>
+    <string name="button_set">设置</string>
+</resources>

@@ -10,6 +10,8 @@ import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOM
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND3
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND4
 import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_CUSTOMREMIND5
+import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_INVENTORY
+import com.example.healthmanager.util.AppConstants.Companion.REQUEST_CODE_INVENTORYLEFT
 import com.example.healthmanager.util.Coroutines
 import kotlinx.coroutines.Job
 import org.jetbrains.anko.doAsync
@@ -34,7 +36,7 @@ class AddMedicineViewModel(
         if(::job.isInitialized) job.cancel()
     }
 
-    fun updateMedicine(medicineDB: MedicineDatabase, medicine: Medicine, resultCode: Int, time: String, dose: Int) {
+    fun updateMedicine(medicineDB: MedicineDatabase, medicine: Medicine, resultCode: Int, time: String = "", dose: Int = -1) {
         when(resultCode) {
             REQUEST_CODE_CUSTOMREMIND1 -> {
                 doAsync {
@@ -68,6 +70,23 @@ class AddMedicineViewModel(
                 doAsync {
                     medicine.takingTime5 = time
                     medicine.takingDose5 = dose
+                    medicineDB.medicineDao().updateMedicine(medicine)
+                }
+            }
+        }
+    }
+
+    fun updateMedicine(medicineDB: MedicineDatabase, medicine: Medicine, resultCode: Int, inventory: Int, inventoryLeft: Int) {
+        when(resultCode) {
+            REQUEST_CODE_INVENTORY -> {
+                doAsync {
+                    medicine.inventory = inventory
+                    medicineDB.medicineDao().updateMedicine(medicine)
+                }
+            }
+            REQUEST_CODE_INVENTORYLEFT -> {
+                doAsync {
+                    medicine.inventoryLeft = inventoryLeft
                     medicineDB.medicineDao().updateMedicine(medicine)
                 }
             }

@@ -28,7 +28,9 @@ class AppApplication: Application() {
                         takingDose2 = 1,
                         takingDose3 = 1,
                         date = "",
-                        details = "还不知道"
+                        inventory = 20,
+                        inventoryLeft = 10,
+                        details = "成人口服量: 解热、镇痛，一次0.3～0.6g，一日3次，必要时每4小时1次。抗风湿，一日3～5g（急性风湿热可用到7～8g），分4次口服。抑制血小板聚集，尚无明确用量，多数主张应用小剂量，如50～150mg，每24小时1次。"
                     )
                 )
                 medicineDB.medicineDao().insert(
@@ -44,6 +46,8 @@ class AppApplication: Application() {
                         takingDose2 = 1,
                         takingDose3 = 1,
                         date = "",
+                        inventory = 20,
+                        inventoryLeft = 10,
                         details = "治疗糖尿病，每片50mg，一日三次，一次一片至四片，用餐前整片吞服或与前几口食物咀嚼使用"
                     )
                 )
